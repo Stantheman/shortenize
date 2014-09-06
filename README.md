@@ -22,7 +22,11 @@ use it to make my IRC channel of NYT feeds from being unreadable.
 # DEPENDENCIES
 
 rss2text is written in perl and uses LWP::UserAgent to shorten links, and
-URL::Find::Simple to locate the URLs on STDIN.
+URL::Find to locate the URLs on STDIN.
+
+These modules are packaged in Debian and can be installed by running:
+
+    apt-get install libwww-perl liburi-find-perl
 
 # AUTHOR
 

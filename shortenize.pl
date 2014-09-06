@@ -3,20 +3,17 @@ use strict;
 use warnings;
 
 use LWP::UserAgent;
-use URI::Find::Simple qw( list_uris );
+use URI::Find;
 
 my $shortener_url = 'http://gaw.sh';
+my $input = do { local $/; <STDIN> };
+my $finder = URI::Find->new(\&shorten);
 
-for my $line (<>) {
-	my $new_line = $line;
-	for my $url (list_uris($line)) {
-		$new_line =~ s/$url/shorten($url)/e;
-	}
-	print $new_line;
-}
+$finder->find(\$input);
+print $input;
 
 sub shorten {
-	my $url = shift;
+	my (undef, $url) = @_;
 	my $ua = LWP::UserAgent->new(agent=>'https://github.com/Stantheman/shortenize');
 	my $response = $ua->post(
 		$shortener_url,
@@ -60,7 +57,11 @@ use it to make my IRC channel of NYT feeds from being unreadable.
 =head1 DEPENDENCIES
 
 rss2text is written in perl and uses LWP::UserAgent to shorten links, and
-URL::Find::Simple to locate the URLs on STDIN.
+URL::Find to locate the URLs on STDIN.
+
+These modules are packaged in Debian and can be installed by running:
+
+    apt-get install libwww-perl liburi-find-perl
 
 =head1 AUTHOR
 
