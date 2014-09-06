@@ -1,4 +1,29 @@
-shortenize
-==========
+# shortenize
 
-shortens any URLs on stdin, prints back out with shortened URLs
+Takes STDIN, replaces any URLs with shortened ones, prints back out.
+
+# USAGE
+
+        echo "my website is http://schwertly.com" | ./shortenize  
+        ./shortenize <file_with_long_urls >file_with_short_ones 
+
+# SYNOPSIS
+
+        ./shortenize 
+
+        Options:
+                none
+
+# DESCRIPTION
+
+shortenize takes input on STDIN and replaces all URLs with short ones. I
+use it to make my IRC channel of NYT feeds from being unreadable.
+
+# DEPENDENCIES
+
+rss2text is written in perl and uses LWP::UserAgent to shorten links, and
+URL::Find::Simple to locate the URLs on STDIN.
+
+# AUTHOR
+
+Stan Schwertly (http://www.schwertly.com)
