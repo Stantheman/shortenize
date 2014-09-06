@@ -57,7 +57,7 @@ use it to make my IRC channel of NYT feeds from being unreadable.
 =head1 DEPENDENCIES
 
 rss2text is written in perl and uses LWP::UserAgent to shorten links, and
-URL::Find to locate the URLs on STDIN.
+URI::Find to locate the URLs on STDIN.
 
 These modules are packaged in Debian and can be installed by running:
 
