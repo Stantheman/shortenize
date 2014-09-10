@@ -103,11 +103,12 @@ use it to make my IRC channel of NYT feeds from being unreadable.
 =head1 DEPENDENCIES
 
 rss2text is written in perl and uses LWP::UserAgent to shorten links, and
-URI::Find to locate the URLs on STDIN.
+URI::Find to locate the URLs on STDIN. It uses YAML::Tiny to parse its config
+files.
 
 These modules are packaged in Debian and can be installed by running:
 
-    apt-get install libwww-perl liburi-find-perl
+    apt-get install libwww-perl liburi-find-perl libyaml-tiny-perl
 
 =head1 AUTHOR
 
