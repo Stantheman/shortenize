@@ -2,11 +2,14 @@
 use strict;
 use warnings;
 
+use Getopt::Long qw(:config auto_help);
 use LWP::UserAgent;
+use Pod::Usage;
 use URI::Find;
 use YAML::Tiny;
 
-my $provider = get_provider() or die "Couldn't get provider";
+my $options = get_options();
+my $provider = get_provider($options->{provider}) or die "Couldn't get provider";
 
 my $input = do { local $/; <STDIN> };
 my $finder = URI::Find->new(\&shorten);
@@ -30,13 +33,25 @@ sub shorten {
 }
 
 sub get_provider {
+	my $provider = shift;
 	# look in .shortenize.d/
-	my $provider_dir = '.shortenizer.d';
+	my $provider_dir = '.shortenizer.d/';
 	return unless (-d $provider_dir);
-	return unless (-f $provider_dir . '/gaw.sh');
+	return unless (-f $provider_dir . $provider);
 
-	my $provider = YAML::Tiny->read($provider_dir . '/gaw.sh');
-	return $provider->[0];
+	my $provider_config = YAML::Tiny->read($provider_dir . $provider);
+	return $provider_config->[0];
+}
+
+sub get_options {
+	my %opts = (
+		'provider' => 'gaw.sh',
+	);
+	GetOptions(\%opts,
+		'provider|p:s',
+	) or pod2usage(2);
+
+	return \%opts;
 }
 
 __END__
