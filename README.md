@@ -13,6 +13,7 @@ Takes STDIN, replaces any URLs with shortened ones, prints back out.
 
         Options:
           -p, --provider          provider to use for shortening urls
+          -l, --length            shorten urls over this length
 
 # OPTIONS
 
@@ -22,6 +23,10 @@ Takes STDIN, replaces any URLs with shortened ones, prints back out.
 
     Shortenizer looks in its local '.shortenizer.d' directory for a
     YAML file with the provider you specify.
+
+- **-l** _length_, **--length**=_length_
+
+    Shortens URLS over this length, defaults to 0/shorten every URL.
 
 # DESCRIPTION
 

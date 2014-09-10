@@ -20,6 +20,8 @@ print $input;
 
 sub shorten {
 	my (undef, $url) = @_;
+	return $url if length($url) < $options->{length};
+
 	my $ua = LWP::UserAgent->new(agent=>'https://github.com/Stantheman/shortenize');
 	my $response = $ua->post(
 		$provider->{url} . $provider->{postpoint},
@@ -47,9 +49,11 @@ sub get_provider {
 sub get_options {
 	my %opts = (
 		'provider' => 'gaw.sh',
+		'length'   => 0,
 	);
 	GetOptions(\%opts,
 		'provider|p:s',
+		'length|l:i',
 	) or pod2usage(2);
 
 	return \%opts;
@@ -72,6 +76,7 @@ Takes STDIN, replaces any URLs with shortened ones, prints back out.
 
 	Options:
 	  -p, --provider          provider to use for shortening urls
+	  -l, --length            shorten urls over this length
 
 =head1 OPTIONS
 
@@ -83,6 +88,10 @@ Specify the URL shortener. By default, shortenizer uses 'gaw.sh'.
 
 Shortenizer looks in its local '.shortenizer.d' directory for a
 YAML file with the provider you specify.
+
+=item B<-l> I<length>, B<--length>=I<length>
+
+Shortens URLS over this length, defaults to 0/shorten every URL.
 
 =back
 
