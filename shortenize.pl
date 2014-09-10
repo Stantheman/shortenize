@@ -2,6 +2,7 @@
 use strict;
 use warnings;
 
+use FindBin qw($Bin);
 use Getopt::Long qw(:config auto_help);
 use LWP::UserAgent;
 use Pod::Usage;
@@ -9,7 +10,7 @@ use URI::Find;
 use YAML::Tiny;
 
 my $options = get_options();
-my $provider = get_provider($options->{provider}) or die "Couldn't get provider";
+my $provider = get_provider($options->{provider}) or die "Couldn't get provider $options->{provider}";
 
 my $input = do { local $/; <STDIN> };
 my $finder = URI::Find->new(\&shorten);
@@ -35,7 +36,7 @@ sub shorten {
 sub get_provider {
 	my $provider = shift;
 	# look in .shortenize.d/
-	my $provider_dir = '.shortenizer.d/';
+	my $provider_dir = "$Bin/.shortenizer.d/";
 	return unless (-d $provider_dir);
 	return unless (-f $provider_dir . $provider);
 
