@@ -4,8 +4,10 @@ use warnings;
 
 use LWP::UserAgent;
 use URI::Find;
+use YAML::Tiny;
 
-my $shortener_url = 'http://gaw.sh';
+my $provider = get_provider() or die "Couldn't get provider";
+
 my $input = do { local $/; <STDIN> };
 my $finder = URI::Find->new(\&shorten);
 
@@ -16,19 +18,25 @@ sub shorten {
 	my (undef, $url) = @_;
 	my $ua = LWP::UserAgent->new(agent=>'https://github.com/Stantheman/shortenize');
 	my $response = $ua->post(
-		$shortener_url,
+		$provider->{url} . $provider->{postpoint},
 		{
-			'url' => $url
+			$provider->{form}->{url} => $url
 		}
 	);
 
 	return if ($response->is_error);
-	return if ($response->decoded_content =~ m|span id="error">.*?</span>|);
-	
-	my $alias = ($response->decoded_content =~ m|id="url" href="(.*?)"|)[0];
-	return unless $alias;
+	my $shortened = ($response->decoded_content =~ m/$provider->{answer_regex}/m)[0];
+	return $shortened;
+}
 
-	return $shortener_url . $alias;
+sub get_provider {
+	# look in .shortenize.d/
+	my $provider_dir = '.shortenizer.d';
+	return unless (-d $provider_dir);
+	return unless (-f $provider_dir . '/gaw.sh');
+
+	my $provider = YAML::Tiny->read($provider_dir . '/gaw.sh');
+	return $provider->[0];
 }
 
 __END__
