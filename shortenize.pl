@@ -71,7 +71,20 @@ Takes STDIN, replaces any URLs with shortened ones, prints back out.
 	./shortenize 
 
 	Options:
-		none
+	  -p, --provider          provider to use for shortening urls
+
+=head1 OPTIONS
+
+=over 4
+
+=item B<-p> I<provider>, B<--provider>=I<provider>
+
+Specify the URL shortener. By default, shortenizer uses 'gaw.sh'.
+
+Shortenizer looks in its local '.shortenizer.d' directory for a
+YAML file with the provider you specify.
+
+=back
 
 =head1 DESCRIPTION
 

@@ -12,7 +12,16 @@ Takes STDIN, replaces any URLs with shortened ones, prints back out.
         ./shortenize 
 
         Options:
-                none
+          -p, --provider          provider to use for shortening urls
+
+# OPTIONS
+
+- **-p** _provider_, **--provider**=_provider_
+
+    Specify the URL shortener. By default, shortenizer uses 'gaw.sh'.
+
+    Shortenizer looks in its local '.shortenizer.d' directory for a
+    YAML file with the provider you specify.
 
 # DESCRIPTION
 
