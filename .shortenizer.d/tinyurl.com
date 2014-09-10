@@ -5,3 +5,4 @@ form:
 	url: url
 	alias: alias
 answer_regex: '<blockquote><b>([^<]+)</b><div id="success"'
+

@@ -5,3 +5,4 @@ form:
 	url: url
 	alias: alias
 answer_regex: '^<a id="url" href="\/[^"]+">([^<]+)<\/a'
+
